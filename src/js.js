@@ -1,19 +1,24 @@
 'use strict';
 class Burger {
-	#price = 0;
-	#calories = 0;
+	_price = [];
+	_calories = [];
 	constructor(size){
 		try{
-			this.size = size;
-			this.#price += size.price;
-			this.#calories += size.calories;
-		} catch {console.error('valid size')}
-	}
+			if(size!=undefined){
+				this.size = size;
+				this._price.push(size.price);
+				this._calories.push(size.calories);
+			}else{throw new Error("uncorrect size");}
+		}catch(e){
+			console.log(e.message)
+		}
+		}	
 	static get SAUCE_MAYO(){
-		return {
+		let sauce = {
 			price: 5,
 			calories:30,
 		}
+		return sauce;
 	}
 	static get SAUCE_MUSTARD(){
 		let sauce = {
@@ -24,80 +29,94 @@ class Burger {
 	}
 	addSauce(value){
 		try{
-			this.#price += value.price;
-			this.#calories += value.calories;
-			return value;
-		}catch{console.error('valid sauce')}
+			if(value!=undefined ){
+				this._price.push(value.price);
+				this._calories.push(value.calories);
+			}else{throw new Error("uncorrect sauce");}
+		}catch(e){
+			console.log(e.message)
+		}
+			
 	}
+	
 	getPrice(){
-		return console.log(this.#price);
+		const reducer = (accumulator, currentValue) => accumulator + currentValue;
+		return this._price.reduce(reducer);
 	}
 	removeSauce(value){
-		try{
-			this.#price -= value.price;
-			this.#calories -= value.calories;
-		} catch {console.error('valid sauce')}
+			this._price.push((-1)* value.price);
+			this._calories.push((-1)*value.calories);
 	}
 	getCalories(){
-		return console.log(this.#calories);
+		const reducer = (accumulator, currentValue) => accumulator + currentValue;
+		return this._calories.reduce(reducer);
 	}
 }
 
 // ======================================================гамбургер===============================
 class Hamburger extends Burger{
+	
 	static get SIZE_SMALL(){
-		return {
-			price:30,
-			calories:200,
-		}
+		const size = {
+				price:30,
+				calories:200,
+			};
+			return size;
 	}
 	static get SIZE_BIG(){
-		return {
+		const size = {
 			price: 50,
 			calories: 320
-		}
+		};
+		return size;
 	}
+
+
 }
 // =======================================================чизбургер======================================
 
 class Cheeseburger extends Burger {
 	static get SIZE_SMALL(){
-		return {
+	const size ={
 			price:40,
 			calories:250,
-		}
+		};
+		return size;
 	}
-	static get SIZE_BIG(){
-		return {
+	static get SIZE_BIG(){	
+	const size ={
 			price: 70,
 			calories: 400
-		}
+		};
+		return size; 
 	}
 	static get SAUCE_TARTAR(){
-		return {
+	const size = {
 			price: 7,
 			calories:37
-		}
+		};
+		return size;
 	}
 }
 
 // ===============================================задание=========================================================
 const burger1 = new Hamburger(Hamburger.SIZE_SMALL);
 burger1.addSauce(Hamburger.SAUCE_MAYO);
-console.log(burger1.addSauce(Hamburger.SAUCE_MUSTARD));   //Возвращало undefined. сделал что бы возвращало добавляемый соус;
+console.log(burger1.addSauce(Hamburger.SAUCE_MUSTARD));
 
-burger1.getPrice() // -> 40
+console.log(burger1.getPrice()) // -> 40
 
 burger1.removeSauce(Hamburger.SAUCE_MAYO);
 
 burger1.getPrice() // -> 35
-burger1.getCalories() // -> 235
+console.log(burger1.getCalories()) // -> 235
 
 const burger2 = new Cheeseburger(Cheeseburger.SIZE_BIG);
 burger2.addSauce(Cheeseburger.SAUCE_TARTAR);
 
 burger2.getPrice() // -> 77
-burger2.getCalories() // -> 437
+console.log(burger2.getCalories()) // -> 437
+console.log(burger1.addSauce(Cheeseburger.SAUCE_TARTAR));
 
 
 // Реалізуйте 2 класа Hamburger/Сheeseburger для того щоб наступний код працював: 
