@@ -6,7 +6,6 @@ class Burger {
 		try{
 			if(JSON.stringify(size) === JSON.stringify(Hamburger.SIZE_BIG) || JSON.stringify(size) === JSON.stringify(Hamburger.SIZE_SMALL)){
 				this.size = size;
-				this.size = size;
 				this._price.push(size.price);
 				this._calories.push(size.calories);
 			}else {throw new Error("uncorrect size");}
@@ -15,17 +14,7 @@ class Burger {
 		}
 	}	
 	
-	addSauce(value){
-		try{
-			if(JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MAYO) ||JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MUSTARD)){
-				this._price.push(value.price);
-				this._calories.push(value.calories);
-			}else{throw new Error("uncorrect sauce");}
-		}catch(e){
-			console.log(e.message)
-		}
-			
-	}
+	
 	
 	getPrice(){
 		const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -45,6 +34,22 @@ class Burger {
 		const reducer = (accumulator, currentValue) => accumulator + currentValue;
 		return this._calories.reduce(reducer);
 	}
+
+	// comparisonOfConditions(size){
+	// 	try{
+	// 	if(burger2 instanceof burger){
+	// 		if(JSON.stringify(size) === JSON.stringify(Cheeseburger.SIZE_BIG) || JSON.stringify(size) === JSON.stringify(Cheeseburger.SIZE_SMALL)){
+	// 			this.size = size;
+	// 			this.size = size;
+	// 			this._price.push(size.price);
+	// 			this._calories.push(size.calories);
+	// 		} else { throw new Error("uncorrect size for cheeseburger");
+	// 				}
+	// 	}
+	// 		} catch(e) {
+	// 			console.log(e.message)
+	// 		}
+	// }
 }
 
 // ======================================================гамбургер===============================
@@ -77,23 +82,33 @@ class Hamburger extends Burger{
 		}
 		return sauce;
 	}
-
-}
-// =======================================================чизбургер======================================
-
-class Cheeseburger extends Hamburger {
 	addSauce(value){
-	super.addSauce(value)
 		try{
-			if(JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MAYO) ||JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MUSTARD)||JSON.stringify(value) === JSON.stringify(Cheeseburger.SAUCE_TARTAR)){
+			if(JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MAYO) ||JSON.stringify(value) === JSON.stringify(Hamburger.SAUCE_MUSTARD)){
 				this._price.push(value.price);
 				this._calories.push(value.calories);
 			}else{throw new Error("uncorrect sauce");}
 		}catch(e){
 			console.log(e.message)
 		}
+			
 	}
+}
+// =======================================================чизбургер======================================
 
+class Cheeseburger extends Burger {
+	constructor(size){
+		super()
+			try{
+				if(JSON.stringify(size) === JSON.stringify(Cheeseburger.SIZE_BIG) || JSON.stringify(size) === JSON.stringify(Cheeseburger.SIZE_SMALL)){
+					this.size = size;
+					this._price.push(size.price);
+					this._calories.push(size.calories);
+				} else {throw new Error("uncorrect size");}
+			} catch(e) {
+				console.log(e.message)
+			}
+	}
 	static get SIZE_SMALL(){
 	const size ={
 			price:40,
@@ -130,12 +145,11 @@ burger1.getPrice() // -> 35
 console.log(burger1.getCalories()) // -> 235
 
 const burger2 = new Cheeseburger(Cheeseburger.SIZE_BIG);
-burger2.addSauce(Cheeseburger.SAUCE_TARTAR);
+// burger2.addSauce(Cheeseburger.SAUCE_TARTAR);
 
-burger2.getPrice() // -> 77
-burger2.getCalories() // -> 437
-console.log('burger1');
-console.log(burger1.addSauce(Cheeseburger.SAUCE_TARTAR));
+// burger2.getPrice() // -> 77
+// burger2.getCalories() // -> 437
+
 // Реалізуйте 2 класа Hamburger/Сheeseburger для того щоб наступний код працював: 
 
 
